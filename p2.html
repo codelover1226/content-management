@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> <?php $offer->head() ?>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="images/favicon.png?123" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Last Step! </title>
+    <!-- BootstrapX -->
+    <link href="
+						<?=$asset_dir?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="
+							<?=$asset_dir?>/css/style-signup.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+							<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+							<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+							<![endif]-->
+    <style>
+      .error {
+        background: transparent;
+        background-image: none;
+        font-weight: bold;
+        font-size: 14px;
+        color: #cc0000;
+      }
+
+      .modal-p {
+        margin: 0 0 20px 0;
+        line-height: 140%;
+      }
+
+      p.LTOFF {
+        margin: 5px 0 20px 0;
+        padding: 12px 5px;
+        border: 1px solid #3b3b3b;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.5;
+        color: #3b3b3b;
+        border-radius: 0.25rem;
+        background: yellow;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+    </style>
+    <!-- integration start -->
+    <link rel="stylesheet" href="
+								<?=$asset_dir?>/css/styles.min.css">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- integration end -->
+  </head>
+  <body> <?php echo $offer->body_top() ?>
+    <!-- integration start -->
+    <!-- integration end -->
+    <div class="pad10">
+      <style>
+        body {
+          background: #FFF !important;
+        }
+
+        .giftbox,
+        .toegang {
+          text-align: center;
+        }
+
+        .form-group {
+          margin-bottom: 15px;
+        }
+
+        .div50 {
+          width: 50%;
+          float: left;
+        }
+
+        .form-control {
+          height: 40px !important;
+        }
+
+        .pad20 {
+          padding: 0 20px;
+        }
+
+        .pad10 {
+          padding: 50px;
+          box-shadow: 0 1px 10px #999;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background: #FFF;
+          max-width: 580px;
+          margin: auto;
+          margin-top: 50px;
+        }
+
+        @media screen and (max-width: 580px) {
+          .pad10 {
+            max-width: 100%;
+            margin-top: 0px;
+            box-shadow: none;
+            border: none;
+          }
+        }
+
+        input.certification {
+          vertical-align: middle;
+          margin-right: revert;
+        }
+      </style>
+      <div class="giftbox">
+        <img src="
+												<?=$asset_dir?>/images/congrats.png" />
+      </div>
+      <div class="toegang">
+        <p>
+          <strong>Instant Access </strong>
+        </p>
+        <p>Congratulations, enter your information below. </p>
+        <p class="LTOFF">
+          <strong style="color:#ff0000;">LIMITED OFFER!!</strong> Receive an itional <strong style="color:#ff0000;">$3 off</strong> your entry when paying with Mastercard
+        </p>
+      </div>
+      <div class="alert alert-danger" id="alert" role="alert" hidden>
+        <span class="sr-only">Error:</span>
+      </div>
+      <div id=status_window></div>
+      <div id="err-block" class="error" style="padding-top:10px;"></div>
+      <form class="checkout-form" action="" method="post" data-uitype="orderform" id="payment-form">
+        <input type="hidden" name="action" value="checkout">
+        <input type="hidden" name="x_amount" value="<?=$this->get_product('msrp')+$this->get_product('shipping_price')?>" data-threeds="amount" />
+        <input type="hidden" name="x_transaction_id" value="" data-threeds="id" />
+        <div class="form-group">
+          <div class=" div100">
+            <input type='tel' class="form-control form-control-lg card-number" pattern="(\D*\d){16,}" required name="cc" value="" placeholder="Credit Card Number" id="ccnum" data-threeds="pan" />
+            <input type="hidden" data-threeds="pan" id="3ds_ccnum" value="">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="div50">
+            <div class="pad20">
+              <select class="form-control form-control-lg" name="expmonth" required id="ccexpmonth" data-threeds="month">
+                <option value="">Month</option>
+                <option value="01">(01) January</option>
+                <option value="02">(02) February</option>
+                <option value="03">(03) March</option>
+                <option value="04">(04) April</option>
+                <option value="05">(05) May</option>
+                <option value="06">(06) June</option>
+                <option value="07">(07) July</option>
+                <option value="08">(08) August</option>
+                <option value="09">(09) September</option>
+                <option value="10">(10) October</option>
+                <option value="11">(11) November</option>
+                <option value="12">(12) December</option>
+              </select>
+            </div>
+          </div>
+          <div class=" div50">
+            <div class="pad20">
+              <select class="form-control form-control-lg" name="expyear" required required id="ccexpyear" data-threeds="year">
+                <option value="">Year</option> <?php
+                                      $year = date('Y');
+                                      for ($i = $year; $i <= $year + 20; $i++) 
+                                      {
+                                          echo '
+																			<option value="' . substr($i, 2) . '">' . $i . '</option>';
+                                      }
+                                  ?>
+              </select>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="form-group">
+          <!--                <div class=" div50">-->
+          <!--                    <div class="pad20">-->
+          <!--                        <input id="zip" name="zip" value="" class="form-control form-control-lg zip" size="20" maxlength="20" type="text" placeholder="Zip Code" required>-->
+          <!--                    </div>-->
+          <!--                </div>-->
+          <div class=" ">
+            <div class="pad20">
+              <input type='tel' class="form-control form-control-lg card-cvc" maxlength="4" required name="cvv" value="" placeholder="CVV (3 digits back of card)" />
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="small text-secondary m-auto pb-2 text-center px-3">
+          <input type="checkbox" name="certification" class="certification" checked>By submitting, I certify that I am at least 18 years old and I accept all terms as expressed in the <a href="#vmodal" data-modal-url="
+																		<?=$slug?>/terms/" class="text-secondary">Terms &amp; Conditions </a>
+        </div>
+        <button class="btn btn-success btn-lg  btn-block" name="button" id="submitBtn" data-uitype="submit_button" style="cursor: pointer">SUBMIT NOW</button>
+        <input type="submit" style="display: none;">
+        <p>
+          <center>We accept the following creditcards:</center>
+        </p>
+        <div align="center">
+          <div class="weAccept"> <?php if ($this->accept_card_type('visa')) { ?> <img class="ccLogos" src="/assets/images/visaCCLogo.png" alt="" height='30' /> <?php } ?> <?php if ($this->accept_card_type('mc')) { ?> <img class="ccLogos" src="/assets/images/masterCCLogo.png" alt="" height='30' /> <?php } ?> <?php if ($this->accept_card_type('dsc')) { ?> <img class="ccLogos" src="/assets/images/discoverCCLogo.png" alt="" height='30' /> <?php } ?> <?php if ($this->accept_card_type('amex')) { ?> <img class="ccLogos" src="/assets/images/amex.png?1" alt="" height='30' /> <?php } ?> </div>
+        </div>
+      </form>
+    </div> <?=$offer->footer()?>
+  </body>
+</html>
